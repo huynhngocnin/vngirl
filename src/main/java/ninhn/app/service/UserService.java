@@ -1,0 +1,30 @@
+package ninhn.app.service;
+
+
+import ninhn.app.model.User;
+
+
+/**
+ * Created by NinHN on 5/11/2016.
+ */
+public interface UserService extends ModelService<User>{
+
+
+    /**
+     * return a user if exist in database vice versa save and return a user
+     *
+     * @param user
+     * @return buddy registered
+     */
+    User findAndRegisterUser(User user);
+
+    /**
+     * find User by facebook
+     * @param facebook
+     * @return
+     */
+    User findByFacebook(long facebook);
+
+
+
+}
