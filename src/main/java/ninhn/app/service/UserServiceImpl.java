@@ -33,17 +33,15 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
         if (userdb != null) {
             return userdb;
         }
-        super.save(userdb);
-        return userdb;
+        super.save(user);
+        return user;
     }
 
     @Override
     public User findByFacebook(long facebook) {
-        User userdb = this.findByFacebook(facebook);
-        if (userdb != null) {
-            return userdb;
+        if (facebook <= 0) {
+            throw new IllegalArgumentException("facebook is invalid");
         }
-        super.save(userdb);
-        return userdb;
+        return this.userRepository.findByFacebook(facebook);
     }
 }

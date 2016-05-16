@@ -14,7 +14,7 @@ public interface UserService extends ModelService<User>{
      * return a user if exist in database vice versa save and return a user
      *
      * @param user
-     * @return buddy registered
+     * @return user registered
      */
     User findAndRegisterUser(User user);
 

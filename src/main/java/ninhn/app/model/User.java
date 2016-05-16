@@ -8,6 +8,7 @@ import java.util.List;
 public class User extends Model {
 
     private String name;
+    private String phone;
     private String birthday;
     private String from;
     private String avatar;
@@ -21,6 +22,14 @@ public class User extends Model {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getBirthday() {
