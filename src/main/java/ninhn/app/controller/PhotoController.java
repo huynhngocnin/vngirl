@@ -4,14 +4,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by ninhn on 5/11/2016.
+ * Created by NinHN on 5/16/16.
  */
 
 @RestController
-public class UserController {
+public class PhotoController {
 
-    @RequestMapping(path = "test")
-    public String test() {
-        return "ok";
+    @RequestMapping(path = "photo")
+    public String photo(){
+        return "Result Photo";
     }
 }

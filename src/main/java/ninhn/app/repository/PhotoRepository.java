@@ -12,15 +12,15 @@ public interface PhotoRepository extends MongoRepository<Photo, String> {
 
     Photo findById(String id);
 
-    List<Photo> find20PhotoPage(int page);
-
-    List<Photo> find5PhotoRandom();
-
-    int insertMultiPhoto(List<Photo> photos);
-
-    boolean updatePhotoViewUp(String photo_id);
-
-    boolean updatePhotoLikeUp(String photo_id);
-
-    boolean updatePhotoShareUp(String photo_id);
+//    List<Photo> find20PhotoPage(int page);
+//
+//    List<Photo> find5PhotoRandom();
+//
+//    int insertMultiPhoto(List<Photo> photos);
+//
+//    boolean updatePhotoViewUp(String photo_id);
+//
+//    boolean updatePhotoLikeUp(String photo_id);
+//
+//    boolean updatePhotoShareUp(String photo_id);
 }
