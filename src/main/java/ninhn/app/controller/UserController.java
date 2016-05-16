@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(path = "get-user")
     public User getUser(@RequestParam long facebook) {
         return this.userService.findByFacebook(facebook);

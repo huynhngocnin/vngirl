@@ -79,4 +79,5 @@ public class User extends Model {
     public void setShare(List<String> share) {
         this.share = share;
     }
+
 }

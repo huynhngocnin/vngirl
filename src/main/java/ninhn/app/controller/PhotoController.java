@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PhotoController {
 
-    @RequestMapping(path = "photo")
+    @RequestMapping(path = "photo-test")
     public String photo(){
         return "Result Photo";
     }
+
 }

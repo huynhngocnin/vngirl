@@ -25,6 +25,4 @@ public interface UserService extends ModelService<User>{
      */
     User findByFacebook(long facebook);
 
-
-
 }

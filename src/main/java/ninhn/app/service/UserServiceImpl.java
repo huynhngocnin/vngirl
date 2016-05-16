@@ -40,7 +40,7 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
     @Override
     public User findByFacebook(long facebook) {
         if (facebook <= 0) {
-            throw new IllegalArgumentException("facebook is invalid");
+            throw new IllegalArgumentException("facebook is invalid!");
         }
         return this.userRepository.findByFacebook(facebook);
     }
