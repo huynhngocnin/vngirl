@@ -14,4 +14,5 @@ public class SystemConstant {
     public static final List<Photo> PHOTO_LIST_EMPTY = new ArrayList<>();
 
     public static final int PHOTOS_IN_PAGE = 20;
+    public static final String LAST_UP_TIME = "lastUpTime";
 }
