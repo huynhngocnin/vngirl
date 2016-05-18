@@ -1,7 +1,9 @@
 package ninhn.app.service;
 
 import ninhn.app.model.Photo;
+import ninhn.app.model.User;
 import ninhn.app.repository.PhotoRepository;
+import ninhn.app.repository.UserRepository;
 import ninhn.app.until.PageUntil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,37 +33,53 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
     }
 
     @Override
+    public long countPhoto() {
+        return this.photoRepository.count();
+    }
+
+    @Override
+    public List<Photo> findByIds(List<String> ids) {
+        Iterable<Photo> iterable = this.photoRepository.findAll(ids);
+        List<Photo> photos = new ArrayList<>();
+        iterable.forEach(photo -> photos.add(photo));
+        return photos;
+    }
+
+    @Override
     public List<Photo> findByPhotoPage(int page) {
         Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPageNumber(page));
-        if(photoPage!=null) {
-            return photoPage.getContent();
+        if (photoPage != null && photoPage.getSize() > 0) {
+            List<Photo> photos = photoPage.getContent();
+            photos.forEach(photo -> photo.viewUp());
+            this.save(photos);
+            return photos;
         }
         return null;
     }
 
     @Override
     public List<Photo> findByPhotoRandom() {
-        return null;
+        long count = this.photoRepository.count();
+        Page<Photo> page = this.photoRepository.findAll(PageUntil.getPageRandom(count));
+        return page.getContent();
     }
 
     @Override
-    public int insertMultiPhoto(List<Photo> photos) {
-
-        return 0;
+    public List<Photo> insertMultiPhoto(List<Photo> photos) {
+        return this.photoRepository.save(photos);
     }
 
     @Override
-    public boolean updatePhotoViewUp(String photo_id) {
-        return false;
+    public Photo updatePhotoLikeUp(String photo_id, String user_id) {
+        Photo photo = this.photoRepository.findById(photo_id);
+        photo.getLike().add(user_id);
+        return this.save(photo);
     }
 
     @Override
-    public boolean updatePhotoLikeUp(String photo_id) {
-        return false;
-    }
-
-    @Override
-    public boolean updatePhotoShareUp(String photo_id) {
-        return false;
+    public Photo updatePhotoShareUp(String photo_id, String user_id) {
+        Photo photo = this.photoRepository.findById(photo_id);
+        photo.getShare().add(user_id);
+        return this.save(photo);
     }
 }

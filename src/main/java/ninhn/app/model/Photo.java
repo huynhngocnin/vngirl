@@ -11,10 +11,10 @@ public class Photo extends Model {
     private String name;
     private String description;
     private String url;
-    private long uploader;
+    private String uploader;
     private long view;
-    private List<Long> like;
-    private List<Long> share;
+    private List<String> like;
+    private List<String> share;
 
     public String getName() {
         return name;
@@ -40,11 +40,11 @@ public class Photo extends Model {
         this.url = url;
     }
 
-    public long getUploader() {
+    public String getUploader() {
         return uploader;
     }
 
-    public void setUploader(long uploader) {
+    public void setUploader(String uploader) {
         this.uploader = uploader;
     }
 
@@ -56,19 +56,25 @@ public class Photo extends Model {
         this.view = view;
     }
 
-    public List<Long> getLike() {
+    public List<String> getLike() {
         return like;
     }
 
-    public void setLike(List<Long> like) {
+    public void setLike(List<String> like) {
         this.like = like;
     }
 
-    public List<Long> getShare() {
+    public List<String> getShare() {
         return share;
     }
 
-    public void setShare(List<Long> share) {
+    public void setShare(List<String> share) {
         this.share = share;
     }
+
+    public long viewUp(){
+        this.view += 1;
+        return this.view;
+    }
+
 }

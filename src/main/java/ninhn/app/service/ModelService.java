@@ -8,6 +8,8 @@ import ninhn.app.model.Model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface  ModelService <T extends Model> {
     /**
      * save model
@@ -15,6 +17,13 @@ public interface  ModelService <T extends Model> {
      * @return
      */
     T save(T t);
+
+    /**
+     * save models
+     * @param t
+     * @return
+     */
+    List<T> save(List<T> t);
 
     /**
      * update model

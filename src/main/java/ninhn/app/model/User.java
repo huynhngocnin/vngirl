@@ -13,6 +13,7 @@ public class User extends Model {
     private String from;
     private String avatar;
     private long facebook;
+    private List<String> love;
     private List<String> like;
     private List<String> share;
 
@@ -62,6 +63,14 @@ public class User extends Model {
 
     public void setFacebook(long facebook) {
         this.facebook = facebook;
+    }
+
+    public List<String> getLove() {
+        return love;
+    }
+
+    public void setLove(List<String> love) {
+        this.love = love;
     }
 
     public List<String> getLike() {

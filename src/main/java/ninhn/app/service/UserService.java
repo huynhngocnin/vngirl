@@ -25,4 +25,8 @@ public interface UserService extends ModelService<User>{
      */
     User findByFacebook(long facebook);
 
+    User updateUserLikeUp(String user_id, String photo_id);
+
+    User updateUserShareUp(String user_id, String photo_id);
+
 }

@@ -9,17 +9,19 @@ import java.util.List;
  */
 public interface PhotoService extends ModelService<Photo> {
 
+    long countPhoto();
+
     Photo findById(String id);
+
+    List<Photo> findByIds(List<String> ids);
 
     List<Photo> findByPhotoPage(int page);
 
     List<Photo> findByPhotoRandom();
 
-    int insertMultiPhoto(List<Photo> photos);
+    List<Photo> insertMultiPhoto(List<Photo> photos);
 
-    boolean updatePhotoViewUp(String photo_id);
+    Photo updatePhotoLikeUp(String photo_id, String user_id);
 
-    boolean updatePhotoLikeUp(String photo_id);
-
-    boolean updatePhotoShareUp(String photo_id);
+    Photo updatePhotoShareUp(String photo_id, String user_id);
 }
