@@ -1,9 +1,7 @@
 package ninhn.app.service;
 
 import ninhn.app.model.Photo;
-import ninhn.app.model.User;
 import ninhn.app.repository.PhotoRepository;
-import ninhn.app.repository.UserRepository;
 import ninhn.app.until.PageUntil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +33,11 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
     @Override
     public long countPhoto() {
         return this.photoRepository.count();
+    }
+
+    @Override
+    public Photo findById(String id) {
+        return this.photoRepository.findOne(id);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class PhotoController {
     }
 
     @RequestMapping(path = "photo-get")
-    public Photo getPhotoId(@RequestBody String id) {
+    public Photo getPhotoId(@RequestParam String id) {
         return this.photoService.findById(id);
     }
 
