@@ -37,7 +37,10 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
 
     @Override
     public Photo findById(String id) {
-        return this.photoRepository.findOne(id);
+        Photo photo = this.photoRepository.findOne(id);
+        photo.viewUp();
+        return this.save(photo);
+
     }
 
     @Override
@@ -54,8 +57,7 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
         if (photoPage != null && photoPage.getSize() > 0) {
             List<Photo> photos = photoPage.getContent();
             photos.forEach(photo -> photo.viewUp());
-            this.save(photos);
-            return photos;
+            return this.save(photos);
         }
         return null;
     }
