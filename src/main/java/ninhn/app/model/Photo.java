@@ -13,8 +13,10 @@ public class Photo extends Model {
     private String url;
     private String uploader;
     private long view;
+    private List<String> love;
     private List<String> like;
     private List<String> share;
+
 
     public String getName() {
         return name;
@@ -54,6 +56,14 @@ public class Photo extends Model {
 
     public void setView(long view) {
         this.view = view;
+    }
+
+    public List<String> getLove() {
+        return love;
+    }
+
+    public void setLove(List<String> love) {
+        this.love = love;
     }
 
     public List<String> getLike() {

@@ -54,6 +54,13 @@ public class PhotoController {
         return this.photoService.save(photos);
     }
 
+    @RequestMapping(path = "photo-love")
+    public boolean photoLove(@RequestParam String photoId, @RequestParam String userId){
+        this.photoService.updatePhotoLoveUp(photoId, userId);
+        this.userService.updateUserLoveUp(userId, photoId);
+        return true;
+    }
+
     @RequestMapping(path = "photo-like")
     public boolean photoLike(@RequestParam String photoId, @RequestParam String userId) {
         this.photoService.updatePhotoLikeUp(photoId, userId);

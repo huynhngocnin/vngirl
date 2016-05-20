@@ -33,8 +33,7 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
         if (userdb != null) {
             return userdb;
         }
-        super.save(user);
-        return user;
+        return super.save(user);
     }
 
     @Override
@@ -46,8 +45,15 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
     }
 
     @Override
+    public User updateUserLoveUp(String user_id, String photo_id) {
+        User user = this.userRepository.findOne(user_id);
+        user.getLove().add(photo_id);
+        return this.save(user);
+    }
+
+    @Override
     public User updateUserLikeUp(String user_id, String photo_id) {
-        User user = this.userRepository.findById(user_id);
+        User user = this.userRepository.findOne(user_id);
         user.getLike().add(photo_id);
         return this.save(user);
     }
