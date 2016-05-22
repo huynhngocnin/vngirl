@@ -15,5 +15,5 @@ public class SystemConstant {
 
     public static final int PHOTOS_IN_PAGE = 30;
     public static final int PHOTOS_IN_RANDOM = 4;
-    public static final String LAST_UP_TIME = "lastUpTime";
+
 }

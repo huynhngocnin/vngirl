@@ -14,8 +14,6 @@ public class User extends Model {
     private String email;
     private String facebook;
     private List<String> love;
-//    private List<String> like;
-//    private List<String> share;
 
     public String getName() {
         return name;
@@ -72,21 +70,5 @@ public class User extends Model {
     public void setLove(List<String> love) {
         this.love = love;
     }
-
-//    public List<String> getLike() {
-//        return like;
-//    }
-//
-//    public void setLike(List<String> like) {
-//        this.like = like;
-//    }
-//
-//    public List<String> getShare() {
-//        return share;
-//    }
-//
-//    public void setShare(List<String> share) {
-//        this.share = share;
-//    }
 
 }

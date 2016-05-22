@@ -27,8 +27,4 @@ public interface UserService extends ModelService<User>{
 
     User updateUserLoveUp(String user_id, String photo_id);
 
-//    User updateUserLikeUp(String user_id, String photo_id);
-//
-//    User updateUserShareUp(String user_id, String photo_id);
-
 }

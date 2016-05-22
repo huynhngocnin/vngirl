@@ -6,4 +6,5 @@ package ninhn.app.constant;
 public class DBConstant {
     public static final String ID = "id";
     public static final String VIEW = "view";
+    public static final String LAST_UP_TIME = "lastUpTime";
 }

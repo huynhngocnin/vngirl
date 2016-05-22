@@ -15,8 +15,6 @@ public class Photo extends Model {
     private String uploadName;
     private long view;
     private List<String> love;
-//    private List<String> like;
-//    private List<String> share;
 
     public String getName() {
         return name;
@@ -74,39 +72,9 @@ public class Photo extends Model {
         this.love = love;
     }
 
-
-//    public List<String> getLike() {
-//        return like;
-//    }
-//
-//    public void setLike(List<String> like) {
-//        this.like = like;
-//    }
-//
-//    public List<String> getShare() {
-//        return share;
-//    }
-//
-//    public void setShare(List<String> share) {
-//        this.share = share;
-//    }
-
     public long viewUp() {
         this.view += 1;
         return this.view;
     }
-
-    public void clearLove() {
-        this.love = null;
-    }
-
-//    public void clearLike() {
-//        this.like = null;
-//    }
-//
-//    public void clearShare() {
-//        this.share = null;
-//    }
-
 
 }

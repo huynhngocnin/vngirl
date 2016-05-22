@@ -19,11 +19,6 @@ public interface PhotoService extends ModelService<Photo> {
 
     List<Photo> findByPhotoRandom();
 
-    List<Photo> insertMultiPhoto(List<Photo> photos);
-
     Photo updatePhotoLoveUp(String photo_id, String user_id);
 
-//    Photo updatePhotoLikeUp(String photo_id, String user_id);
-//
-//    Photo updatePhotoShareUp(String photo_id, String user_id);
 }

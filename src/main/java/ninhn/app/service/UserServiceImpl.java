@@ -48,17 +48,4 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
         return this.save(user);
     }
 
-//    @Override
-//    public User updateUserLikeUp(String user_id, String photo_id) {
-//        User user = this.userRepository.findOne(user_id);
-//        user.getLike().add(photo_id);
-//        return this.save(user);
-//    }
-//
-//    @Override
-//    public User updateUserShareUp(String user_id, String photo_id) {
-//        User user = this.userRepository.findById(user_id);
-//        user.getShare().add(photo_id);
-//        return this.save(user);
-//    }
 }
