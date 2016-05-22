@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends ModelServiceImpl<User> implements UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
+//
+//    @Autowired
+//    private MongoTemplate mongoTemplate;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -37,10 +37,7 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
     }
 
     @Override
-    public User findByFacebook(long facebook) {
-        if (facebook <= 0) {
-            throw new IllegalArgumentException("facebook is invalid!");
-        }
+    public User findByFacebook(String facebook) {
         return this.userRepository.findByFacebook(facebook);
     }
 
@@ -51,17 +48,17 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
         return this.save(user);
     }
 
-    @Override
-    public User updateUserLikeUp(String user_id, String photo_id) {
-        User user = this.userRepository.findOne(user_id);
-        user.getLike().add(photo_id);
-        return this.save(user);
-    }
-
-    @Override
-    public User updateUserShareUp(String user_id, String photo_id) {
-        User user = this.userRepository.findById(user_id);
-        user.getShare().add(photo_id);
-        return this.save(user);
-    }
+//    @Override
+//    public User updateUserLikeUp(String user_id, String photo_id) {
+//        User user = this.userRepository.findOne(user_id);
+//        user.getLike().add(photo_id);
+//        return this.save(user);
+//    }
+//
+//    @Override
+//    public User updateUserShareUp(String user_id, String photo_id) {
+//        User user = this.userRepository.findById(user_id);
+//        user.getShare().add(photo_id);
+//        return this.save(user);
+//    }
 }

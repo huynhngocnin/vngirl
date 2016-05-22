@@ -20,7 +20,7 @@ public class UserController {
 
 
     @RequestMapping(path = "get-user")
-    public User getUser(@RequestParam long facebook) {
+    public User getUser(@RequestParam String facebook) {
         return this.userService.findByFacebook(facebook);
     }
 

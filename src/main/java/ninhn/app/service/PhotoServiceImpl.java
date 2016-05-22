@@ -20,9 +20,9 @@ import java.util.List;
 public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoService {
 
     private final PhotoRepository photoRepository;
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
+//
+//    @Autowired
+//    private MongoTemplate mongoTemplate;
 
     @Autowired
     public PhotoServiceImpl(PhotoRepository photoRepository) {
@@ -81,17 +81,17 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
         return this.save(photo);
     }
 
-    @Override
-    public Photo updatePhotoLikeUp(String photo_id, String user_id) {
-        Photo photo = this.photoRepository.findOne(photo_id);
-        photo.getLike().add(user_id);
-        return this.save(photo);
-    }
-
-    @Override
-    public Photo updatePhotoShareUp(String photo_id, String user_id) {
-        Photo photo = this.photoRepository.findOne(photo_id);
-        photo.getShare().add(user_id);
-        return this.save(photo);
-    }
+//    @Override
+//    public Photo updatePhotoLikeUp(String photo_id, String user_id) {
+//        Photo photo = this.photoRepository.findOne(photo_id);
+//        photo.getLike().add(user_id);
+//        return this.save(photo);
+//    }
+//
+//    @Override
+//    public Photo updatePhotoShareUp(String photo_id, String user_id) {
+//        Photo photo = this.photoRepository.findOne(photo_id);
+//        photo.getShare().add(user_id);
+//        return this.save(photo);
+//    }
 }

@@ -61,19 +61,19 @@ public class PhotoController {
         return true;
     }
 
-    @RequestMapping(path = "photo-like")
-    public boolean photoLike(@RequestParam String photoId, @RequestParam String userId) {
-        this.photoService.updatePhotoLikeUp(photoId, userId);
-        this.userService.updateUserLikeUp(userId, photoId);
-        return true;
-    }
-
-    @RequestMapping(path = "photo-share")
-    public boolean photoShare(@RequestParam String photoId, @RequestParam String userId) {
-        this.photoService.updatePhotoShareUp(photoId, userId);
-        this.userService.updateUserShareUp(userId, photoId);
-        return true;
-    }
+//    @RequestMapping(path = "photo-like")
+//    public boolean photoLike(@RequestParam String photoId, @RequestParam String userId) {
+//        this.photoService.updatePhotoLikeUp(photoId, userId);
+//        this.userService.updateUserLikeUp(userId, photoId);
+//        return true;
+//    }
+//
+//    @RequestMapping(path = "photo-share")
+//    public boolean photoShare(@RequestParam String photoId, @RequestParam String userId) {
+//        this.photoService.updatePhotoShareUp(photoId, userId);
+//        this.userService.updateUserShareUp(userId, photoId);
+//        return true;
+//    }
 
     @RequestMapping(path = "photo-test")
     public String photo() {

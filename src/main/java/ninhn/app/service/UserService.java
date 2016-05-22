@@ -23,12 +23,12 @@ public interface UserService extends ModelService<User>{
      * @param facebook
      * @return
      */
-    User findByFacebook(long facebook);
+    User findByFacebook(String facebook);
 
     User updateUserLoveUp(String user_id, String photo_id);
 
-    User updateUserLikeUp(String user_id, String photo_id);
-
-    User updateUserShareUp(String user_id, String photo_id);
+//    User updateUserLikeUp(String user_id, String photo_id);
+//
+//    User updateUserShareUp(String user_id, String photo_id);
 
 }

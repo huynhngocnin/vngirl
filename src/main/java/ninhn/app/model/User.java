@@ -11,11 +11,11 @@ public class User extends Model {
     private String phone;
     private String birthday;
     private String from;
-    private String avatar;
-    private long facebook;
+    private String email;
+    private String facebook;
     private List<String> love;
-    private List<String> like;
-    private List<String> share;
+//    private List<String> like;
+//    private List<String> share;
 
     public String getName() {
         return name;
@@ -49,19 +49,19 @@ public class User extends Model {
         this.from = from;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public long getFacebook() {
+    public String getFacebook() {
         return facebook;
     }
 
-    public void setFacebook(long facebook) {
+    public void setFacebook(String facebook) {
         this.facebook = facebook;
     }
 
@@ -73,20 +73,20 @@ public class User extends Model {
         this.love = love;
     }
 
-    public List<String> getLike() {
-        return like;
-    }
-
-    public void setLike(List<String> like) {
-        this.like = like;
-    }
-
-    public List<String> getShare() {
-        return share;
-    }
-
-    public void setShare(List<String> share) {
-        this.share = share;
-    }
+//    public List<String> getLike() {
+//        return like;
+//    }
+//
+//    public void setLike(List<String> like) {
+//        this.like = like;
+//    }
+//
+//    public List<String> getShare() {
+//        return share;
+//    }
+//
+//    public void setShare(List<String> share) {
+//        this.share = share;
+//    }
 
 }

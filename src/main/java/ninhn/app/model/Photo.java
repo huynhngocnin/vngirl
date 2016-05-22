@@ -11,12 +11,12 @@ public class Photo extends Model {
     private String name;
     private String description;
     private String url;
-    private String uploader;
+    private String uploadId;
+    private String uploadName;
     private long view;
     private List<String> love;
-    private List<String> like;
-    private List<String> share;
-
+//    private List<String> like;
+//    private List<String> share;
 
     public String getName() {
         return name;
@@ -42,12 +42,20 @@ public class Photo extends Model {
         this.url = url;
     }
 
-    public String getUploader() {
-        return uploader;
+    public String getUploadId() {
+        return uploadId;
     }
 
-    public void setUploader(String uploader) {
-        this.uploader = uploader;
+    public void setUploadId(String uploadId) {
+        this.uploadId = uploadId;
+    }
+
+    public String getUploadName() {
+        return uploadName;
+    }
+
+    public void setUploadName(String uploadName) {
+        this.uploadName = uploadName;
     }
 
     public long getView() {
@@ -66,25 +74,39 @@ public class Photo extends Model {
         this.love = love;
     }
 
-    public List<String> getLike() {
-        return like;
-    }
 
-    public void setLike(List<String> like) {
-        this.like = like;
-    }
+//    public List<String> getLike() {
+//        return like;
+//    }
+//
+//    public void setLike(List<String> like) {
+//        this.like = like;
+//    }
+//
+//    public List<String> getShare() {
+//        return share;
+//    }
+//
+//    public void setShare(List<String> share) {
+//        this.share = share;
+//    }
 
-    public List<String> getShare() {
-        return share;
-    }
-
-    public void setShare(List<String> share) {
-        this.share = share;
-    }
-
-    public long viewUp(){
+    public long viewUp() {
         this.view += 1;
         return this.view;
     }
+
+    public void clearLove() {
+        this.love = null;
+    }
+
+//    public void clearLike() {
+//        this.like = null;
+//    }
+//
+//    public void clearShare() {
+//        this.share = null;
+//    }
+
 
 }
