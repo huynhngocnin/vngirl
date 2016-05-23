@@ -15,6 +15,7 @@ public class Photo extends Model {
     private String uploadName;
     private long view;
     private List<String> love;
+    private String uploadAvatar;
 
     public String getName() {
         return name;
@@ -70,6 +71,14 @@ public class Photo extends Model {
 
     public void setLove(List<String> love) {
         this.love = love;
+    }
+
+    public String getUploadAvatar() {
+        return uploadAvatar;
+    }
+
+    public void setUploadAvatar(String uploadAvatar) {
+        this.uploadAvatar = uploadAvatar;
     }
 
     public long viewUp() {

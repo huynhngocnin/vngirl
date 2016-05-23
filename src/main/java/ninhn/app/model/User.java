@@ -14,6 +14,7 @@ public class User extends Model {
     private String email;
     private String facebook;
     private List<String> love;
+    private String avatar;
 
     public String getName() {
         return name;
@@ -71,4 +72,11 @@ public class User extends Model {
         this.love = love;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }
