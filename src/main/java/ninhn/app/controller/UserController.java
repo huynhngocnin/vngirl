@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by ninhn on 5/11/2016.
  */
@@ -26,6 +28,7 @@ public class UserController {
 
     @RequestMapping(path = "register-user")
     public User registerUser(@RequestBody User user) {
+        user.setCreateTime(new Date());
         return this.userService.findAndRegisterUser(user);
     }
 

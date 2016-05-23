@@ -63,9 +63,4 @@ public class PhotoController {
         return true;
     }
 
-    @RequestMapping(path = "photo-test")
-    public String photo() {
-        return "Result Photo";
-    }
-
 }
