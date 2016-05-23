@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,29 +52,16 @@ public class PhotoController {
 
     @RequestMapping(path = "photo-insert")
     public List<Photo> insertPhotos(@RequestBody List<Photo> photos) {
+        photos.forEach(photo -> photo.setCreateTime(new Date()));
         return this.photoService.save(photos);
     }
 
     @RequestMapping(path = "photo-love")
-    public boolean photoLove(@RequestParam String photoId, @RequestParam String userId){
+    public boolean photoLove(@RequestParam String photoId, @RequestParam String userId) {
         this.photoService.updatePhotoLoveUp(photoId, userId);
         this.userService.updateUserLoveUp(userId, photoId);
         return true;
     }
-
-//    @RequestMapping(path = "photo-like")
-//    public boolean photoLike(@RequestParam String photoId, @RequestParam String userId) {
-//        this.photoService.updatePhotoLikeUp(photoId, userId);
-//        this.userService.updateUserLikeUp(userId, photoId);
-//        return true;
-//    }
-//
-//    @RequestMapping(path = "photo-share")
-//    public boolean photoShare(@RequestParam String photoId, @RequestParam String userId) {
-//        this.photoService.updatePhotoShareUp(photoId, userId);
-//        this.userService.updateUserShareUp(userId, photoId);
-//        return true;
-//    }
 
     @RequestMapping(path = "photo-test")
     public String photo() {

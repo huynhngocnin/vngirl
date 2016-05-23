@@ -1,7 +1,7 @@
 package ninhn.app.until;
 
 import static ninhn.app.constant.SystemConstant.PHOTOS_IN_PAGE;
-import static ninhn.app.constant.DBConstant.LAST_UP_TIME;
+import static ninhn.app.constant.DBConstant.CREATE_TIME;
 import static ninhn.app.constant.SystemConstant.PHOTOS_IN_RANDOM;
 import static ninhn.app.constant.DBConstant.VIEW;
 
@@ -25,7 +25,7 @@ public class PageUntil {
 //    }
 
     public static Pageable getPageNumber(int page) {
-        sort = new Sort(Sort.Direction.DESC, LAST_UP_TIME);
+        sort = new Sort(Sort.Direction.DESC, CREATE_TIME);
         return new PageRequest(page, PHOTOS_IN_PAGE, sort);
     }
 
