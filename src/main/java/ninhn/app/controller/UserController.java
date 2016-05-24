@@ -21,17 +21,17 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(path = "get-user")
+    @RequestMapping(path = "user-get")
     public User getUser(@RequestParam String id) {
         return this.userService.findById(id);
     }
 
-    @RequestMapping(path = "get-user-facebook")
+    @RequestMapping(path = "user-get-facebook")
     public User getUserFacebook(@RequestParam String facebook) {
         return this.userService.findByFacebook(facebook);
     }
 
-    @RequestMapping(path = "register-user")
+    @RequestMapping(path = "user-register")
     public User registerUser(@RequestBody User user) {
         user.setCreateTime(new Date());
         return this.userService.findAndRegisterUser(user);
