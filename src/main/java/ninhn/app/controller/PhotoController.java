@@ -56,10 +56,17 @@ public class PhotoController {
         return this.photoService.save(photos);
     }
 
-    @RequestMapping(path = "photo-love")
-    public boolean photoLove(@RequestParam String photoId, @RequestParam String userId) {
+    @RequestMapping(path = "photo-love-up")
+    public boolean photoLoveUp(@RequestParam String photoId, @RequestParam String userId) {
         this.photoService.updatePhotoLoveUp(photoId, userId);
         this.userService.updateUserLoveUp(userId, photoId);
+        return true;
+    }
+
+    @RequestMapping(path = "photo-love-down")
+    public boolean photoLoveDown(@RequestParam String photoId, @RequestParam String userId) {
+        this.photoService.updatePhotoLoveDown(photoId, userId);
+        this.userService.updateUserLoveDown(userId, photoId);
         return true;
     }
 

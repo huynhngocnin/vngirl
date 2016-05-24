@@ -48,4 +48,11 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
         return this.save(user);
     }
 
+    @Override
+    public User updateUserLoveDown(String user_id, String photo_id) {
+        User user = this.userRepository.findOne(user_id);
+        user.getLove().remove(photo_id);
+        return this.save(user);
+    }
+
 }

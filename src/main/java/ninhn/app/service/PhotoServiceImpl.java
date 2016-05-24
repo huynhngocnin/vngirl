@@ -76,4 +76,11 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
         return this.save(photo);
     }
 
+    @Override
+    public Photo updatePhotoLoveDown(String photo_id, String user_id) {
+        Photo photo = this.photoRepository.findOne(photo_id);
+        photo.getLove().remove(user_id);
+        return this.save(photo);
+    }
+
 }

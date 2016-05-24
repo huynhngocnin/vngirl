@@ -21,4 +21,6 @@ public interface PhotoService extends ModelService<Photo> {
 
     Photo updatePhotoLoveUp(String photo_id, String user_id);
 
+    Photo updatePhotoLoveDown(String photo_id, String user_id);
+
 }
