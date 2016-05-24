@@ -1,5 +1,6 @@
 package ninhn.app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ public class User extends Model {
     private String from;
     private String email;
     private String facebook;
-    private List<String> love;
+    private List<String> love = new ArrayList<>();
     private String avatar;
 
     public String getName() {

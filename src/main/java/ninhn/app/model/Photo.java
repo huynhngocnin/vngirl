@@ -1,6 +1,7 @@
 package ninhn.app.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class Photo extends Model {
     private String uploadId;
     private String uploadName;
     private long view;
-    private List<String> love;
+    private List<String> love = new ArrayList<>();
     private String uploadAvatar;
 
     public String getName() {
