@@ -38,26 +38,33 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
     @Override
     public Photo findById(String id) {
         Photo photo = this.photoRepository.findOne(id);
-        photo.viewUp();
-        return this.save(photo);
-
+        if (photo != null) {
+            photo.viewUp();
+            return this.save(photo);
+        }
+        return null;
     }
 
     @Override
     public List<Photo> findByIds(List<String> ids) {
         Iterable<Photo> iterable = this.photoRepository.findAll(ids);
         List<Photo> photos = new ArrayList<>();
-        iterable.forEach(photo -> photos.add(photo));
+        if (iterable != null) {
+            iterable.forEach(photo -> photos.add(photo));
+        }
         return photos;
     }
 
     @Override
     public List<Photo> findByPhotoPage(int page) {
         Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPageNumber(page));
-        if (photoPage != null && photoPage.getSize() > 0) {
+        if (photoPage != null) {
             List<Photo> photos = photoPage.getContent();
-            photos.forEach(photo -> photo.viewUp());
-            return this.save(photos);
+            if (photos != null) {
+                photos.forEach(photo -> photo.viewUp());
+                return this.save(photos);
+            }
+            return null;
         }
         return null;
     }
@@ -72,15 +79,23 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
     @Override
     public Photo updatePhotoLoveUp(String photo_id, String user_id) {
         Photo photo = this.photoRepository.findOne(photo_id);
-        photo.getLove().add(user_id);
-        return this.save(photo);
+        if (photo != null) {
+            photo.getLove().add(user_id);
+            return this.save(photo);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public Photo updatePhotoLoveDown(String photo_id, String user_id) {
         Photo photo = this.photoRepository.findOne(photo_id);
-        photo.getLove().remove(user_id);
-        return this.save(photo);
+        if (photo != null) {
+            photo.getLove().remove(user_id);
+            return this.save(photo);
+        } else {
+            return null;
+        }
     }
 
 }
