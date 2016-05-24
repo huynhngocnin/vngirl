@@ -60,7 +60,7 @@ public class PhotoController {
     }
 
     @RequestMapping(path = "photo-love-up")
-    public boolean photoLoveUp(@RequestParam String photoId, @RequestParam String userId) {
+    public Boolean photoLoveUp(@RequestParam String photoId, @RequestParam String userId) {
         if (this.photoService.updatePhotoLoveUp(photoId, userId) != null &&
                 this.userService.updateUserLoveUp(userId, photoId) != null)
             return true;
@@ -68,7 +68,7 @@ public class PhotoController {
     }
 
     @RequestMapping(path = "photo-love-down")
-    public boolean photoLoveDown(@RequestParam String photoId, @RequestParam String userId) {
+    public Boolean photoLoveDown(@RequestParam String photoId, @RequestParam String userId) {
         if (this.photoService.updatePhotoLoveDown(photoId, userId) != null &&
                 this.userService.updateUserLoveDown(userId, photoId) != null)
             return true;
