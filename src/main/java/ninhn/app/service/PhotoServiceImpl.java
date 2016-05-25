@@ -60,7 +60,7 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
         Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPageNumber(page));
         if (photoPage != null) {
             List<Photo> photos = photoPage.getContent();
-            if (photos != null) {
+            if (photos != null && photos.size() > 0) {
                 photos.forEach(photo -> photo.viewUp());
                 return this.save(photos);
             }
