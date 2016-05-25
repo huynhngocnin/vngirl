@@ -5,6 +5,7 @@ import ninhn.app.model.User;
 import ninhn.app.service.PhotoService;
 import ninhn.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,10 +46,12 @@ public class UserController {
 
     @RequestMapping(path = "user-photo-love")
     public List<Photo> getPhotoLove(@RequestParam String userId) {
-        User user = this.userService.findById(userId);
-        if (user != null) {
-            List<String> loves = user.getLove();
-            return this.photoService.findByIds(loves);
+        if (!StringUtils.isEmpty(userId)) {
+            User user = this.userService.findById(userId);
+            if (user != null) {
+                List<String> loves = user.getLove();
+                return this.photoService.findByIds(loves);
+            }
         }
         return null;
     }
