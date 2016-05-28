@@ -30,18 +30,27 @@ public class UserController {
 
     @RequestMapping(path = "user-get")
     public User getUser(@RequestParam String id) {
-        return this.userService.findById(id);
+        if (!StringUtils.isEmpty(id)) {
+            return this.userService.findById(id);
+        }
+        return null;
     }
 
     @RequestMapping(path = "user-get-facebook")
     public User getUserFacebook(@RequestParam String facebook) {
-        return this.userService.findByFacebook(facebook);
+        if (!StringUtils.isEmpty(facebook)) {
+            return this.userService.findByFacebook(facebook);
+        }
+        return null;
     }
 
     @RequestMapping(path = "user-register")
     public User registerUser(@RequestBody User user) {
-        user.setCreateTime(new Date());
-        return this.userService.findAndRegisterUser(user);
+        if (user != null) {
+            user.setCreateTime(new Date());
+            return this.userService.findAndRegisterUser(user);
+        }
+        return null;
     }
 
     @RequestMapping(path = "user-photo-love")
