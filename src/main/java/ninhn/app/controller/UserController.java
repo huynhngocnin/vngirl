@@ -6,10 +6,7 @@ import ninhn.app.service.PhotoService;
 import ninhn.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +25,7 @@ public class UserController {
     private PhotoService photoService;
 
 
-    @RequestMapping(path = "user-get")
+    @RequestMapping(path = "user-get", method = RequestMethod.GET)
     public User getUser(@RequestParam String id) {
         if (!StringUtils.isEmpty(id)) {
             return this.userService.findById(id);
@@ -36,7 +33,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-get-facebook")
+    @RequestMapping(path = "user-get-facebook", method = RequestMethod.GET)
     public User getUserFacebook(@RequestParam String facebook) {
         if (!StringUtils.isEmpty(facebook)) {
             return this.userService.findByFacebook(facebook);
@@ -44,7 +41,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-register")
+    @RequestMapping(path = "user-register", method = RequestMethod.POST)
     public User registerUser(@RequestBody User user) {
         if (user != null) {
             user.setCreateTime(new Date());
@@ -53,7 +50,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-photo-love")
+    @RequestMapping(path = "user-photo-love", method = RequestMethod.GET)
     public List<Photo> getPhotoLove(@RequestParam String userId) {
         if (!StringUtils.isEmpty(userId)) {
             User user = this.userService.findById(userId);
