@@ -1,4 +1,4 @@
-package ninhn.app.filter;
+package ninhn.app.config;
 
 import java.io.IOException;
 import javax.servlet.Filter;

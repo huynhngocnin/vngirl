@@ -14,7 +14,7 @@ public class Photo extends Model {
     private String url;
     private String uploadId;
     private String uploadName;
-    private long view;
+    private long view = 0;
     private List<String> love = new ArrayList<>();
     private String uploadAvatar;
 
