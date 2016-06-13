@@ -41,6 +41,9 @@ public class S3Wrapper {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    private String fileUrl;
+    private String fileName;
+
     private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
         return upload(new FileInputStream(filePath), uploadKey);
     }
@@ -57,8 +60,8 @@ public class S3Wrapper {
 
         IOUtils.closeQuietly(inputStream);
 
-        String fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_PUBLIC + uploadKeyDB).toString();
-        String fileName = uploadKey.replace(EXTEND_JPG, BLANK);
+        fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_PUBLIC + uploadKeyDB).toString();
+        fileName = uploadKey.replace(EXTEND_JPG, BLANK);
         fileName = fileName.replace(EXTEND_PNG, BLANK);
         //Save photo to DB
         this.photoService.save(DefaultUntil.photoInsert(fileUrl, fileName));
