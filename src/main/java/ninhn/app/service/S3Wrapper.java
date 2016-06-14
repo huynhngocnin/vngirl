@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import static ninhn.app.constant.SystemConstant.UPLOAD_PUBLIC;
+import static ninhn.app.constant.SystemConstant.UPLOAD_REVIEW;
 import static ninhn.app.constant.SystemConstant.BLANK;
 import static ninhn.app.constant.SystemConstant.EXTEND_JPG;
 import static ninhn.app.constant.SystemConstant.EXTEND_PNG;
@@ -46,6 +44,35 @@ public class S3Wrapper {
 
     private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
         return upload(new FileInputStream(filePath), uploadKey);
+    }
+
+    private PutObjectResult upload(MultipartFile multipartFile, String uploadKey) {
+        //Update name of photo
+        String uploadKeyDB = (new Date().getTime()) + "_" + uploadKey;
+
+        ObjectMetadata omd = new ObjectMetadata();
+        omd.setContentType(multipartFile.getContentType());
+        omd.setContentLength(multipartFile.getSize());
+        omd.setHeader("filename", multipartFile.getName());
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(multipartFile.getBytes());
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, UPLOAD_REVIEW + uploadKeyDB, bis, new ObjectMetadata());
+
+            putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
+
+            PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
+
+            fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_REVIEW + uploadKeyDB).toString();
+            fileName = uploadKey.replace(EXTEND_JPG, BLANK);
+            fileName = fileName.replace(EXTEND_PNG, BLANK);
+            //Save photo to DB
+            this.photoService.save(DefaultUntil.photoInsert(fileUrl, fileName));
+
+            return putObjectResult;
+        } catch (IOException ioException) {
+            return null;
+        }
+
     }
 
     private PutObjectResult upload(InputStream inputStream, String uploadKey) {
@@ -75,11 +102,7 @@ public class S3Wrapper {
         Arrays.stream(multipartFiles)
                 .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
                 .forEach(multipartFile -> {
-                    try {
-                        putObjectResults.add(upload(multipartFile.getInputStream(), multipartFile.getOriginalFilename()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    putObjectResults.add(upload(multipartFile, multipartFile.getOriginalFilename()));
                 });
 
         return putObjectResults;
