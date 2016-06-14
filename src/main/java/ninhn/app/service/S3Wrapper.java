@@ -2,6 +2,7 @@ package ninhn.app.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.google.common.io.ByteStreams;
 import ninhn.app.until.DefaultUntil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,58 +43,36 @@ public class S3Wrapper {
     private String fileUrl;
     private String fileName;
 
-    private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
-        return upload(new FileInputStream(filePath), uploadKey);
-    }
-
     private PutObjectResult upload(MultipartFile multipartFile, String uploadKey) {
         //Update name of photo
         String uploadKeyDB = (new Date().getTime()) + "_" + uploadKey;
 
-        ObjectMetadata omd = new ObjectMetadata();
-        omd.setContentType(multipartFile.getContentType());
-        omd.setContentLength(multipartFile.getSize());
-        omd.setHeader("filename", multipartFile.getName());
         try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(multipartFile.getBytes());
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, UPLOAD_REVIEW + uploadKeyDB, bis, new ObjectMetadata());
+            InputStream inputStreamHandle = multipartFile.getInputStream();
+            byte[] contentBytes = IOUtils.toByteArray(inputStreamHandle);
+            Long contentLength = Long.valueOf(contentBytes.length);
+
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(contentLength);
+
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, UPLOAD_PUBLIC + uploadKeyDB, multipartFile.getInputStream(), metadata);
 
             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
 
             PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
 
-            fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_REVIEW + uploadKeyDB).toString();
+            IOUtils.closeQuietly(inputStreamHandle);
+
+            fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_PUBLIC + uploadKeyDB).toString();
             fileName = uploadKey.replace(EXTEND_JPG, BLANK);
             fileName = fileName.replace(EXTEND_PNG, BLANK);
             //Save photo to DB
             this.photoService.save(DefaultUntil.photoInsert(fileUrl, fileName));
 
             return putObjectResult;
-        } catch (IOException ioException) {
+        }catch (IOException ioException){
             return null;
         }
-
-    }
-
-    private PutObjectResult upload(InputStream inputStream, String uploadKey) {
-        //Update name of photo
-        String uploadKeyDB = (new Date().getTime()) + "_" + uploadKey;
-
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, UPLOAD_PUBLIC + uploadKeyDB, inputStream, new ObjectMetadata());
-
-        putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
-
-        PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
-
-        IOUtils.closeQuietly(inputStream);
-
-        fileUrl = amazonS3Client.getUrl(bucket, UPLOAD_PUBLIC + uploadKeyDB).toString();
-        fileName = uploadKey.replace(EXTEND_JPG, BLANK);
-        fileName = fileName.replace(EXTEND_PNG, BLANK);
-        //Save photo to DB
-        this.photoService.save(DefaultUntil.photoInsert(fileUrl, fileName));
-
-        return putObjectResult;
     }
 
     public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
