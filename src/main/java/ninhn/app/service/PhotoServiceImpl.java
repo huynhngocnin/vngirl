@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,6 +53,7 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
         if (iterable != null) {
             iterable.forEach(photo -> photos.add(photo));
         }
+        Collections.reverse(photos);
         return photos;
     }
 

@@ -30,7 +30,6 @@ public class PageUntil {
     }
 
     public static Pageable getPageRandom(long total) {
-        sort = new Sort(Sort.Direction.DESC, VIEW);
         return new PageRequest(RandomUntil.getRandomPhotoPage(total), PHOTOS_IN_RANDOM);
     }
 }
