@@ -2,7 +2,6 @@ package ninhn.app.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
-import com.google.common.io.ByteStreams;
 import ninhn.app.until.DefaultUntil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 import static ninhn.app.constant.SystemConstant.UPLOAD_PUBLIC;
-import static ninhn.app.constant.SystemConstant.UPLOAD_REVIEW;
 import static ninhn.app.constant.SystemConstant.BLANK;
 import static ninhn.app.constant.SystemConstant.EXTEND_JPG;
 import static ninhn.app.constant.SystemConstant.EXTEND_PNG;

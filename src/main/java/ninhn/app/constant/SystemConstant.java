@@ -21,9 +21,10 @@ public class SystemConstant {
 
     public static final String BLANK = "";
     public static final String EXTEND_JPG = ".jpg";
+    public static final String EXTEND_JPEG = ".jpeg";
     public static final String EXTEND_PNG = ".png";
 
-    public static final String UPLOAD_AVATAR ="https://s3-ap-northeast-1.amazonaws.com/vngirl/photo/avatar.jpg";
+    public static final String UPLOAD_AVATAR ="https://storage.googleapis.com/vn_girl/photo/avatar.jpg";
     public static final String UPLOAD_NAME ="David L. Evans";
     public static final String UPLOAD_ID ="1178079645550097";
 
