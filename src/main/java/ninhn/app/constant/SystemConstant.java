@@ -14,6 +14,7 @@ public class SystemConstant {
     public static final List<Photo> PHOTO_LIST_EMPTY = new ArrayList<>();
 
     public static final int PHOTOS_IN_PAGE = 30;
+    public static final int REVIEW_IN_PAGE = 30;
     public static final int PHOTOS_IN_RANDOM = 4;
 
     public static final String UPLOAD_PUBLIC = "photo/public/";

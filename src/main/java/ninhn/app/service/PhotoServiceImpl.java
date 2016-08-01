@@ -59,7 +59,7 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
 
     @Override
     public List<Photo> findByPhotoPage(int page) {
-        Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPageNumber(page));
+        Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPagePhotoNumber(page));
         if (photoPage != null) {
             List<Photo> photos = photoPage.getContent();
             if (photos != null && photos.size() > 0) {
