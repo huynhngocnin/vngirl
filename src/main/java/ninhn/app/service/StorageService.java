@@ -19,6 +19,7 @@ import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.ObjectAccessControl;
 import com.google.api.services.storage.model.Objects;
 import com.google.api.services.storage.model.StorageObject;
+import ninhn.app.model.Photo;
 import ninhn.app.until.DefaultUntil;
 import ninhn.app.until.StorageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ import static ninhn.app.constant.SystemConstant.EXTEND_JPEG;
 import static ninhn.app.constant.SystemConstant.EXTEND_JPG;
 import static ninhn.app.constant.SystemConstant.EXTEND_PNG;
 import static ninhn.app.constant.SystemConstant.UPLOAD_PUBLIC;
+import static ninhn.app.constant.SystemConstant.UPLOAD_REVIEW;
 
 /**
  * Main class for the Cloud Storage JSON API sample.
@@ -140,6 +142,86 @@ public class StorageService {
 
         return storageObjects;
     }
+
+    /**
+     * @param multipartFile
+     * @param photo
+     * @return
+     */
+    public StorageObject userUploadPhoto(MultipartFile multipartFile, Photo photo) {
+        try {
+            InputStreamContent contentStream = new InputStreamContent(
+                    CONTENT_TYPE, multipartFile.getInputStream());
+            // Setting the length improves upload performance
+            contentStream.setLength(multipartFile.getSize());
+            StorageObject objectMetadata = new StorageObject()
+                    // Set the destination object name
+                    .setName(UPLOAD_PUBLIC + System.currentTimeMillis() + multipartFile.getOriginalFilename())
+                    // Set the access control list to publicly read-only
+                    .setAcl(Arrays.asList(
+                            new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
+
+            Storage client = StorageFactory.getService();
+            Storage.Objects.Insert insertRequest = client.objects().insert(
+                    BUCKET_NAME, objectMetadata, contentStream);
+            //Upload to cloud storage
+            StorageObject object = insertRequest.execute();
+            //Get url of object
+            String urlMedia = object.getMediaLink();
+            photo.setUrl(urlMedia);
+            //Save DB
+            this.photoService.save(photo);
+            return object;
+        } catch (IOException ioException) {
+            return null;
+        } catch (GeneralSecurityException gsException) {
+            return null;
+        }
+    }
+
+    public boolean userDeletePhoto(String photoName, boolean isPublish) {
+        try {
+            deleteObject(photoName);
+            return true;
+        } catch (IOException ioException) {
+            return false;
+        } catch (GeneralSecurityException gsException) {
+            return false;
+        }
+    }
+
+    public boolean adminApprovePhoto(String photoName) {
+        try {
+            Storage client = StorageFactory.getService();
+            StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
+            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, UPLOAD_REVIEW, BUCKET_NAME, UPLOAD_PUBLIC, object);
+            copyRequest.execute();
+            deleteObject(photoName);
+            return true;
+        } catch (IOException ioException) {
+            return false;
+        } catch (GeneralSecurityException gsException) {
+            return false;
+        }
+    }
+
+    public boolean adminRejectPhoto(String photoId) {
+        return true;
+    }
+
+    // [START delete_object]
+
+    /**
+     * Deletes an object in a bucket.
+     *
+     * @param path the path to the object to delete.
+     */
+    public static void deleteObject(String path)
+            throws IOException, GeneralSecurityException {
+        Storage client = StorageFactory.getService();
+        client.objects().delete(BUCKET_NAME, path).execute();
+    }
+    // [END delete_object]
 
 }
 //[END all]

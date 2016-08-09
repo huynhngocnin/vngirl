@@ -4,6 +4,7 @@ import ninhn.app.model.Photo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 /**
  * Created by NinHN on 5/14/16.
@@ -12,6 +13,10 @@ public interface PhotoRepository extends MongoRepository<Photo, String> {
 
     Photo findById(String id);
 
+    @Query("{\"$or\": [\n" +
+            "    {\"deleted\":{ false }, \n" +
+            "    {\"deleted\":{ null } \n" +
+            "    ]}")
     Page<Photo> findAll(Pageable pageable);
 
 //    List<Photo> find5PhotoRandom();

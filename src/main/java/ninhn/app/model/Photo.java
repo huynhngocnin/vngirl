@@ -17,6 +17,7 @@ public class Photo extends Model {
     private long view = 0;
     private List<String> love = new ArrayList<>();
     private String uploadAvatar;
+    private boolean deleted = false;
 
     public String getName() {
         return name;
@@ -80,6 +81,14 @@ public class Photo extends Model {
 
     public void setUploadAvatar(String uploadAvatar) {
         this.uploadAvatar = uploadAvatar;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public long viewUp() {
