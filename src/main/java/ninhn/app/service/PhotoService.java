@@ -13,6 +13,8 @@ public interface PhotoService extends ModelService<Photo> {
 
     Photo findById(String id);
 
+    Photo findByName(String photoName);
+
     List<Photo> findByIds(List<String> ids);
 
     List<Photo> findByPhotoPage(int page);

@@ -21,9 +21,6 @@ import java.util.List;
 public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoService {
 
     private final PhotoRepository photoRepository;
-//
-//    @Autowired
-//    private MongoTemplate mongoTemplate;
 
     @Autowired
     public PhotoServiceImpl(PhotoRepository photoRepository) {
@@ -44,6 +41,11 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
             return this.save(photo);
         }
         return null;
+    }
+
+    @Override
+    public Photo findByName(String photoName) {
+        return this.photoRepository.findByName(photoName);
     }
 
     @Override

@@ -39,6 +39,7 @@ import static ninhn.app.constant.SystemConstant.EXTEND_JPG;
 import static ninhn.app.constant.SystemConstant.EXTEND_PNG;
 import static ninhn.app.constant.SystemConstant.UPLOAD_PUBLIC;
 import static ninhn.app.constant.SystemConstant.UPLOAD_REVIEW;
+import static ninhn.app.constant.SystemConstant.UNDERLINED;
 
 /**
  * Main class for the Cloud Storage JSON API sample.
@@ -57,6 +58,9 @@ public class StorageService {
 
     @Autowired
     private PhotoService photoService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     // [START list_bucket]
 
@@ -98,12 +102,12 @@ public class StorageService {
             throws IOException, GeneralSecurityException {
         InputStreamContent contentStream = new InputStreamContent(
                 CONTENT_TYPE, multipartFile.getInputStream());
-        String fileName = multipartFile.getOriginalFilename();
+        String fileName = multipartFile.getOriginalFilename().toLowerCase();
         // Setting the length improves upload performance
         contentStream.setLength(multipartFile.getSize());
         StorageObject objectMetadata = new StorageObject()
                 // Set the destination object name
-                .setName(UPLOAD_PUBLIC + multipartFile.getOriginalFilename())
+                .setName(UPLOAD_PUBLIC + System.currentTimeMillis() + UNDERLINED + fileName)
                 // Set the access control list to publicly read-only
                 .setAcl(Arrays.asList(
                         new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
@@ -154,9 +158,10 @@ public class StorageService {
                     CONTENT_TYPE, multipartFile.getInputStream());
             // Setting the length improves upload performance
             contentStream.setLength(multipartFile.getSize());
+            String fileName = UPLOAD_REVIEW + System.currentTimeMillis() + UNDERLINED + multipartFile.getOriginalFilename();
             StorageObject objectMetadata = new StorageObject()
                     // Set the destination object name
-                    .setName(UPLOAD_PUBLIC + System.currentTimeMillis() + multipartFile.getOriginalFilename())
+                    .setName(fileName)
                     // Set the access control list to publicly read-only
                     .setAcl(Arrays.asList(
                             new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
@@ -168,9 +173,10 @@ public class StorageService {
             StorageObject object = insertRequest.execute();
             //Get url of object
             String urlMedia = object.getMediaLink();
+            photo.setName(fileName);
             photo.setUrl(urlMedia);
             //Save DB
-            this.photoService.save(photo);
+            this.reviewService.save(photo);
             return object;
         } catch (IOException ioException) {
             return null;
@@ -182,7 +188,23 @@ public class StorageService {
     public boolean userDeletePhoto(String photoName, boolean isPublish) {
         try {
             deleteObject(photoName);
-            return true;
+            Photo photo;
+            if (isPublish) {
+                photo = this.photoService.findByName(photoName);
+                if (photo != null) {
+                    photo.setDeleted(true);
+                    this.photoService.update(photo);
+                    return true;
+                }
+            } else {
+                photo = this.reviewService.findByName(photoName);
+                if (photo != null) {
+                    photo.setDeleted(true);
+                    this.reviewService.update(photo);
+                    return true;
+                }
+            }
+            return false;
         } catch (IOException ioException) {
             return false;
         } catch (GeneralSecurityException gsException) {
@@ -192,12 +214,21 @@ public class StorageService {
 
     public boolean adminApprovePhoto(String photoName) {
         try {
+            String photoPublishName = photoName;
+            photoPublishName = photoPublishName.replace(UPLOAD_REVIEW, UPLOAD_PUBLIC);
             Storage client = StorageFactory.getService();
             StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
-            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, UPLOAD_REVIEW, BUCKET_NAME, UPLOAD_PUBLIC, object);
+            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, object);
             copyRequest.execute();
             deleteObject(photoName);
-            return true;
+            Photo photo = this.reviewService.findByName(photoName);
+            if (photo != null) {
+                this.reviewService.delete(photo.getId());
+                photo.setName(photoPublishName);
+                this.photoService.save(photo);
+                return true;
+            }
+            return false;
         } catch (IOException ioException) {
             return false;
         } catch (GeneralSecurityException gsException) {
@@ -216,7 +247,7 @@ public class StorageService {
      *
      * @param path the path to the object to delete.
      */
-    public static void deleteObject(String path)
+    public void deleteObject(String path)
             throws IOException, GeneralSecurityException {
         Storage client = StorageFactory.getService();
         client.objects().delete(BUCKET_NAME, path).execute();

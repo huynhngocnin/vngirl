@@ -19,6 +19,8 @@ public interface PhotoRepository extends MongoRepository<Photo, String> {
             "    ]}")
     Page<Photo> findAll(Pageable pageable);
 
+
+    Photo findByName(String photoName);
 //    List<Photo> find5PhotoRandom();
 //
 //    int insertMultiPhoto(List<Photo> photos);

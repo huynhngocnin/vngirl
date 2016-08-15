@@ -10,4 +10,6 @@ import java.util.List;
 public interface ReviewService extends ModelService<Photo> {
 
     List<Photo> findByPhotoPage(int page);
+
+    Photo findByName(String photoName);
 }
