@@ -49,8 +49,18 @@ public class UploadController {
     }
 
     @RequestMapping(value = "/user-photo-delete", method = RequestMethod.POST)
-    public boolean userUploadPhoto(@RequestParam("photo-name") String photoName, @RequestParam("photo-is-publish") boolean isPublish) {
+    public boolean userUploadDeletePhoto(@RequestParam("photo-name") String photoName, @RequestParam("photo-is-publish") boolean isPublish) {
         return this.storageService.userDeletePhoto(photoName, isPublish);
+    }
+
+    @RequestMapping(value = "/user-photo-reject", method = RequestMethod.POST)
+    public boolean userUploadRejectPhoto(@RequestParam("photo-name") String photoName) {
+        return false;
+    }
+
+    @RequestMapping(value = "/user-photo-approve", method = RequestMethod.POST)
+    public boolean userUploadApprovePhoto(@RequestParam("photo-name") String photoName) {
+        return false;
     }
 
 //    @Autowired
