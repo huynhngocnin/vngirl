@@ -13,10 +13,10 @@ public interface PhotoRepository extends MongoRepository<Photo, String> {
 
     Photo findById(String id);
 
-    @Query("{\"$or\": [\n" +
-            "    {\"deleted\":{ false }, \n" +
-            "    {\"deleted\":{ null } \n" +
-            "    ]}")
+//    @Query("{\"$or\": [\n" +
+//            "    {\"deleted\":{ false }, \n" +
+//            "    {\"deleted\":{ null } \n" +
+//            "    ]}")
     Page<Photo> findAll(Pageable pageable);
 
 

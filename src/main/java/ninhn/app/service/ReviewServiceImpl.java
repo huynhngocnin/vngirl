@@ -1,17 +1,21 @@
 package ninhn.app.service;
 
-import ninhn.app.model.Photo;
+import ninhn.app.model.PhotoReview;
 import ninhn.app.repository.ReviewRepository;
 import ninhn.app.until.PageUntil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by ninhn on 2016/08/01.
  */
-public class ReviewServiceImpl extends ModelServiceImpl<Photo> implements ReviewService {
+@Service
+@Transactional
+public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements ReviewService {
 
     private final ReviewRepository reviewRepository;
 
@@ -22,16 +26,21 @@ public class ReviewServiceImpl extends ModelServiceImpl<Photo> implements Review
     }
 
     @Override
-    public List<Photo> findByPhotoPage(int page) {
-        Page<Photo> photoPage = this.reviewRepository.findAll(PageUntil.getPageReviewNumber(page));
+    public List<PhotoReview> findByPhotoPage(int page) {
+        Page<PhotoReview> photoPage = this.reviewRepository.findAll(PageUntil.getPageReviewNumber(page));
         if (photoPage != null) {
-            List<Photo> photos = photoPage.getContent();
+            List<PhotoReview> photos = photoPage.getContent();
             if (photos != null && photos.size() > 0) {
                 photos.forEach(photo -> photo.viewUp());
                 return this.save(photos);
             }
             return null;
         }
+        return null;
+    }
+
+    @Override
+    public PhotoReview findByName(String photoName) {
         return null;
     }
 }

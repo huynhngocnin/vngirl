@@ -1,15 +1,16 @@
 package ninhn.app.service;
 
 import ninhn.app.model.Photo;
+import ninhn.app.model.PhotoReview;
 
 import java.util.List;
 
 /**
  * Created by ninhn on 2016/08/01.
  */
-public interface ReviewService extends ModelService<Photo> {
+public interface ReviewService extends ModelService<PhotoReview> {
 
-    List<Photo> findByPhotoPage(int page);
+    List<PhotoReview> findByPhotoPage(int page);
 
-    Photo findByName(String photoName);
+    PhotoReview findByName(String photoName);
 }

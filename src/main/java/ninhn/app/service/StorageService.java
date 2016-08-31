@@ -20,6 +20,7 @@ import com.google.api.services.storage.model.ObjectAccessControl;
 import com.google.api.services.storage.model.Objects;
 import com.google.api.services.storage.model.StorageObject;
 import ninhn.app.model.Photo;
+import ninhn.app.model.PhotoReview;
 import ninhn.app.until.DefaultUntil;
 import ninhn.app.until.StorageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,10 +150,10 @@ public class StorageService {
 
     /**
      * @param multipartFile
-     * @param photo
+     * @param photoReview
      * @return
      */
-    public StorageObject userUploadPhoto(MultipartFile multipartFile, Photo photo) {
+    public StorageObject userUploadPhoto(MultipartFile multipartFile, PhotoReview photoReview) {
         try {
             InputStreamContent contentStream = new InputStreamContent(
                     CONTENT_TYPE, multipartFile.getInputStream());
@@ -163,7 +164,7 @@ public class StorageService {
                     // Set the destination object name
                     .setName(fileName)
                     // Set the access control list to publicly read-only
-                    .setAcl(Arrays.asList(
+                    .setAcl(Arrays.asList (
                             new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
 
             Storage client = StorageFactory.getService();
@@ -173,10 +174,10 @@ public class StorageService {
             StorageObject object = insertRequest.execute();
             //Get url of object
             String urlMedia = object.getMediaLink();
-            photo.setName(fileName);
-            photo.setUrl(urlMedia);
+            photoReview.setName(fileName);
+            photoReview.setUrl(urlMedia);
             //Save DB
-            this.reviewService.save(photo);
+            this.reviewService.save(photoReview);
             return object;
         } catch (IOException ioException) {
             return null;
@@ -188,16 +189,15 @@ public class StorageService {
     public boolean userDeletePhoto(String photoName, boolean isPublish) {
         try {
             deleteObject(photoName);
-            Photo photo;
             if (isPublish) {
-                photo = this.photoService.findByName(photoName);
+                Photo photo = this.photoService.findByName(photoName);
                 if (photo != null) {
                     photo.setDeleted(true);
                     this.photoService.update(photo);
                     return true;
                 }
             } else {
-                photo = this.reviewService.findByName(photoName);
+                PhotoReview photo = this.reviewService.findByName(photoName);
                 if (photo != null) {
                     photo.setDeleted(true);
                     this.reviewService.update(photo);

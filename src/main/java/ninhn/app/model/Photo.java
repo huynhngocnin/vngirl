@@ -1,13 +1,14 @@
 package ninhn.app.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by NinHN on 5/14/16.
  */
-public class Photo extends Model {
+public class Photo extends Model implements Serializable {
 
     private String name;
     private String description;
@@ -17,7 +18,6 @@ public class Photo extends Model {
     private long view = 0;
     private List<String> love = new ArrayList<>();
     private String uploadAvatar;
-    private boolean deleted = false;
 
     public String getName() {
         return name;
@@ -81,14 +81,6 @@ public class Photo extends Model {
 
     public void setUploadAvatar(String uploadAvatar) {
         this.uploadAvatar = uploadAvatar;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     public long viewUp() {

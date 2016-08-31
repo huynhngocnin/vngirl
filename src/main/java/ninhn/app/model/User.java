@@ -1,12 +1,13 @@
 package ninhn.app.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by NinHN on 5/11/2016.
  */
-public class User extends Model {
+public class User extends Model implements Serializable {
 
     private String name;
     private String phone;
