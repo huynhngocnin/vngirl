@@ -17,7 +17,9 @@ public interface PhotoService extends ModelService<Photo> {
 
     List<Photo> findByIds(List<String> ids);
 
-    List<Photo> findByPhotoPage(int page);
+    List<Photo> findByPhotoPageGlobal(int page);
+
+    List<Photo> findByPhotoPageUser(String uploadId, int page);
 
     List<Photo> findByPhotoRandom();
 

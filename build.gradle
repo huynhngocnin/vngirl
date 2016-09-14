@@ -19,6 +19,7 @@ jar {
 	baseName = 'vngirl'
 	version = '1.0.0'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -26,18 +27,14 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.springframework.boot:spring-boot-starter-freemarker")
-	compile("org.springframework.cloud:spring-cloud-aws-context:1.1.0.RELEASE")
 	compile("commons-io:commons-io:2.4")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile 'com.google.apis:google-api-services-storage:v1-rev78-1.22.0'
 }
-
 
 eclipse {
 	classpath {

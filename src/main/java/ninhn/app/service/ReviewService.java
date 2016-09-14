@@ -12,5 +12,7 @@ public interface ReviewService extends ModelService<PhotoReview> {
 
     List<PhotoReview> findByPhotoPage(int page);
 
+    List<PhotoReview> findByUploadId(String userId, int page);
+
     PhotoReview findByName(String photoName);
 }

@@ -1,6 +1,7 @@
 package ninhn.app.repository;
 
 import ninhn.app.model.Photo;
+import ninhn.app.model.PhotoReview;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -18,6 +19,8 @@ public interface PhotoRepository extends MongoRepository<Photo, String> {
 //            "    {\"deleted\":{ null } \n" +
 //            "    ]}")
     Page<Photo> findAll(Pageable pageable);
+
+    Page<Photo> findByUploadId(String uploadId, Pageable pageable);
 
 
     Photo findByName(String photoName);

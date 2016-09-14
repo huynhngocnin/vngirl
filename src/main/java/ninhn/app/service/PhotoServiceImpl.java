@@ -60,7 +60,7 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
     }
 
     @Override
-    public List<Photo> findByPhotoPage(int page) {
+    public List<Photo> findByPhotoPageGlobal(int page) {
         Page<Photo> photoPage = this.photoRepository.findAll(PageUntil.getPagePhotoNumber(page));
         if (photoPage != null) {
             List<Photo> photos = photoPage.getContent();
@@ -69,6 +69,15 @@ public class PhotoServiceImpl extends ModelServiceImpl<Photo> implements PhotoSe
                 return this.save(photos);
             }
             return null;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Photo> findByPhotoPageUser(String uploadId, int page) {
+        Page<Photo> photoPage = this.photoRepository.findByUploadId(uploadId, PageUntil.getPagePhotoNumber(page));
+        if (photoPage != null) {
+            return photoPage.getContent();
         }
         return null;
     }

@@ -14,6 +14,7 @@ package ninhn.app.service;
  * the License.
  */
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.ObjectAccessControl;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static ninhn.app.constant.SystemConstant.BLANK;
@@ -150,10 +152,10 @@ public class StorageService {
 
     /**
      * @param multipartFile
-     * @param photoReview
+     * @param strPhotoReview
      * @return
      */
-    public StorageObject userUploadPhoto(MultipartFile multipartFile, PhotoReview photoReview) {
+    public StorageObject userUploadPhoto(MultipartFile multipartFile, String strPhotoReview) {
         try {
             InputStreamContent contentStream = new InputStreamContent(
                     CONTENT_TYPE, multipartFile.getInputStream());
@@ -174,8 +176,12 @@ public class StorageService {
             StorageObject object = insertRequest.execute();
             //Get url of object
             String urlMedia = object.getMediaLink();
+            //Convert json to object
+            ObjectMapper mapper = new ObjectMapper();
+            PhotoReview photoReview = mapper.readValue(strPhotoReview, PhotoReview.class);
             photoReview.setName(fileName);
             photoReview.setUrl(urlMedia);
+            photoReview.setCreateTime(new Date());
             //Save DB
             this.reviewService.save(photoReview);
             return object;
@@ -186,39 +192,40 @@ public class StorageService {
         }
     }
 
-    public boolean userDeletePhoto(String photoName, boolean isPublish) {
-        try {
-            deleteObject(photoName);
-            if (isPublish) {
-                Photo photo = this.photoService.findByName(photoName);
-                if (photo != null) {
-                    photo.setDeleted(true);
-                    this.photoService.update(photo);
-                    return true;
-                }
-            } else {
-                PhotoReview photo = this.reviewService.findByName(photoName);
-                if (photo != null) {
-                    photo.setDeleted(true);
-                    this.reviewService.update(photo);
-                    return true;
-                }
-            }
-            return false;
-        } catch (IOException ioException) {
-            return false;
-        } catch (GeneralSecurityException gsException) {
-            return false;
-        }
-    }
+//    public boolean userDeletePhoto(String photoName, boolean isPublish) {
+//        try {
+//            deleteObject(photoName);
+//            if (isPublish) {
+//                Photo photo = this.photoService.findByName(photoName);
+//                if (photo != null) {
+//                    photo.setDeleted(true);
+//                    this.photoService.update(photo);
+//                    return true;
+//                }
+//            } else {
+//                PhotoReview photo = this.reviewService.findByName(photoName);
+//                if (photo != null) {
+//                    photo.setDeleted(true);
+//                    this.reviewService.update(photo);
+//                    return true;
+//                }
+//            }
+//            return false;
+//        } catch (IOException ioException) {
+//            return false;
+//        } catch (GeneralSecurityException gsException) {
+//            return false;
+//        }
+//    }
 
     public boolean adminApprovePhoto(String photoName) {
         try {
             String photoPublishName = photoName;
             photoPublishName = photoPublishName.replace(UPLOAD_REVIEW, UPLOAD_PUBLIC);
             Storage client = StorageFactory.getService();
-            StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
-            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, object);
+            //StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
+            StorageObject content = new StorageObject();
+            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, content);
             copyRequest.execute();
             deleteObject(photoName);
             Photo photo = this.reviewService.findByName(photoName);
@@ -236,8 +243,8 @@ public class StorageService {
         }
     }
 
-    public boolean adminRejectPhoto(String photoId) {
-        return true;
+    public boolean adminRejectPhoto(String photoName) {
+        return false;
     }
 
     // [START delete_object]

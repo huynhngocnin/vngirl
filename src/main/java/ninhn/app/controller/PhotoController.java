@@ -37,9 +37,20 @@ public class PhotoController {
         return this.photoService.findByIds(ids);
     }
 
+    //Backup for old version
     @RequestMapping(path = "photo-list", method = RequestMethod.GET)
     public List<Photo> getPhotoList(@RequestParam(defaultValue = "0", required = false) int page) {
-        return this.photoService.findByPhotoPage(page);
+        return this.photoService.findByPhotoPageGlobal(page);
+    }
+
+    @RequestMapping(path = "photo-list-global", method = RequestMethod.GET)
+    public List<Photo> getPhotoListGlobal(@RequestParam(defaultValue = "0", required = false) int page) {
+        return this.photoService.findByPhotoPageGlobal(page);
+    }
+
+    @RequestMapping(path = "photo-list-user", method = RequestMethod.GET)
+    public List<Photo> getPhotoListUser(@RequestParam String userId, @RequestParam(defaultValue = "0", required = false) int page) {
+        return this.photoService.findByPhotoPageUser(userId, page);
     }
 
     @RequestMapping(path = "photo-random", method = RequestMethod.GET)
@@ -47,14 +58,14 @@ public class PhotoController {
         return this.photoService.findByPhotoRandom();
     }
 
-    @RequestMapping(path = "photo-insert", method = RequestMethod.POST)
-    public List<Photo> insertPhotos(@RequestBody List<Photo> photos) {
-        if (photos != null && photos.size() > 0) {
-            photos.forEach(photo -> photo.setCreateTime(new Date()));
-            return this.photoService.save(photos);
-        }
-        return null;
-    }
+//    @RequestMapping(path = "photo-insert", method = RequestMethod.POST)
+//    public List<Photo> insertPhotos(@RequestBody List<Photo> photos) {
+//        if (photos != null && photos.size() > 0) {
+//            photos.forEach(photo -> photo.setCreateTime(new Date()));
+//            return this.photoService.save(photos);
+//        }
+//        return null;
+//    }
 
     @RequestMapping(path = "photo-love-up", method = RequestMethod.GET)
     public Boolean photoLoveUp(@RequestParam String photoId, @RequestParam String userId) {

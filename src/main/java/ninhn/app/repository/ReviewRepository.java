@@ -13,6 +13,8 @@ public interface ReviewRepository extends MongoRepository<PhotoReview, String> {
 
     Page<PhotoReview> findAll(Pageable pageable);
 
+    Page<PhotoReview> findByUploadId(String uploadId, Pageable pageable);
+
     Photo findByName(String photoName);
 
 }

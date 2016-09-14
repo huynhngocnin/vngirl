@@ -40,6 +40,14 @@ public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements 
     }
 
     @Override
+    public List<PhotoReview> findByUploadId(String userId, int page) {
+        Page<PhotoReview> photoPage = this.reviewRepository.findByUploadId(userId, PageUntil.getPageReviewNumber(page));
+        return photoPage.getContent();
+    }
+
+
+
+    @Override
     public PhotoReview findByName(String photoName) {
         return null;
     }

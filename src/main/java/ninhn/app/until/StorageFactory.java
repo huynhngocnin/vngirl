@@ -47,7 +47,7 @@ public class StorageFactory {
     HttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
     JsonFactory jsonFactory = new JacksonFactory();
     //GoogleCredential credential = GoogleCredential.getApplicationDefault(transport, jsonFactory);
-    File file = new File("/Users/NinHN/Work/Studio/Git/source/vngirl-94f746eb78dd.json");
+    File file = new File("/Users/NinHuynh/Work/Studio/Git/source/vngirl-94f746eb78dd.json");
     //File file = new File("/home/huynhngocnin/source/vngirl-94f746eb78dd.json");
     GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream(file));
 
