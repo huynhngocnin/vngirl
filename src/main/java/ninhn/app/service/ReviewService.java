@@ -1,6 +1,5 @@
 package ninhn.app.service;
 
-import ninhn.app.model.Photo;
 import ninhn.app.model.PhotoReview;
 
 import java.util.List;
@@ -14,5 +13,5 @@ public interface ReviewService extends ModelService<PhotoReview> {
 
     List<PhotoReview> findByUploadId(String userId, int page);
 
-    PhotoReview findByName(String photoName);
+    PhotoReview findByName(String name);
 }

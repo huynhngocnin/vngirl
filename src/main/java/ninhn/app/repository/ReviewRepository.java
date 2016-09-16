@@ -1,6 +1,5 @@
 package ninhn.app.repository;
 
-import ninhn.app.model.Photo;
 import ninhn.app.model.PhotoReview;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +14,6 @@ public interface ReviewRepository extends MongoRepository<PhotoReview, String> {
 
     Page<PhotoReview> findByUploadId(String uploadId, Pageable pageable);
 
-    Photo findByName(String photoName);
+    PhotoReview findByName(String name);
 
 }

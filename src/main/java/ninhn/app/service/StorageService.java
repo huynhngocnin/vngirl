@@ -166,7 +166,7 @@ public class StorageService {
                     // Set the destination object name
                     .setName(fileName)
                     // Set the access control list to publicly read-only
-                    .setAcl(Arrays.asList (
+                    .setAcl(Arrays.asList(
                             new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
 
             Storage client = StorageFactory.getService();
@@ -220,18 +220,22 @@ public class StorageService {
 
     public boolean adminApprovePhoto(String photoName) {
         try {
-            String photoPublishName = photoName;
-            photoPublishName = photoPublishName.replace(UPLOAD_REVIEW, UPLOAD_PUBLIC);
-            Storage client = StorageFactory.getService();
-            //StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
-            StorageObject content = new StorageObject();
-            Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, content);
-            copyRequest.execute();
-            deleteObject(photoName);
-            Photo photo = this.reviewService.findByName(photoName);
+            PhotoReview photoReview = this.reviewService.findByName(photoName);
+            Photo photo = photoReview;
             if (photo != null) {
+                String photoPublishName = photoName;
+                photoPublishName = photoPublishName.replace(UPLOAD_REVIEW, UPLOAD_PUBLIC);
+                Storage client = StorageFactory.getService();
+                StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
+                Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, object);
+                StorageObject objectCopy = copyRequest.execute();
+                //Get url of object
+                String urlMedia = objectCopy.getMediaLink();
+                deleteObject(photoName);
                 this.reviewService.delete(photo.getId());
                 photo.setName(photoPublishName);
+                photo.setUrl(urlMedia);
+                photo.setCreateTime(new Date());
                 this.photoService.save(photo);
                 return true;
             }

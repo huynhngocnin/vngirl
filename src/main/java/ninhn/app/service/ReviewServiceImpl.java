@@ -48,7 +48,7 @@ public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements 
 
 
     @Override
-    public PhotoReview findByName(String photoName) {
-        return null;
+    public PhotoReview findByName(String name) {
+        return this.reviewRepository.findByName(name);
     }
 }
