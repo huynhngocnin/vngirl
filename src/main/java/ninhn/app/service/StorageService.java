@@ -221,13 +221,14 @@ public class StorageService {
     public boolean adminApprovePhoto(String photoName) {
         try {
             PhotoReview photoReview = this.reviewService.findByName(photoName);
-            Photo photo = photoReview;
+            Photo photo = Photo.convertFromPhotoReview(photoReview);
             if (photo != null) {
                 String photoPublishName = photoName;
                 photoPublishName = photoPublishName.replace(UPLOAD_REVIEW, UPLOAD_PUBLIC);
                 Storage client = StorageFactory.getService();
                 StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
                 Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, object);
+                //copyRequest.setDestinationPredefinedAcl("allUsers|READER");
                 StorageObject objectCopy = copyRequest.execute();
                 //Get url of object
                 String urlMedia = objectCopy.getMediaLink();

@@ -30,11 +30,7 @@ public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements 
         Page<PhotoReview> photoPage = this.reviewRepository.findAll(PageUntil.getPageReviewNumber(page));
         if (photoPage != null) {
             List<PhotoReview> photos = photoPage.getContent();
-            if (photos != null && photos.size() > 0) {
-                photos.forEach(photo -> photo.viewUp());
-                return this.save(photos);
-            }
-            return null;
+            return photos;
         }
         return null;
     }

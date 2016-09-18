@@ -88,4 +88,19 @@ public class Photo extends Model implements Serializable {
         return this.view;
     }
 
+    public static Photo convertFromPhotoReview(PhotoReview photoReview){
+        Photo photo = new Photo();
+        photo.setId(photoReview.getId());
+        photo.setCreateTime(photoReview.getCreateTime());
+        photo.setLastUpTime(photoReview.getLastUpTime());
+        photo.setDeleted(photoReview.isDeleted());
+        photo.setName(photoReview.getName());
+        photo.setDescription(photoReview.getDescription());
+        photo.setUrl(photoReview.getUrl());
+        photo.setUploadId(photoReview.getUploadId());
+        photo.setUploadName(photoReview.getUploadName());
+        photo.setUploadAvatar(photoReview.getUploadAvatar());
+        return photo;
+    }
+
 }
