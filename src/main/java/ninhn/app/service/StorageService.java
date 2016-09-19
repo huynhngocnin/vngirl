@@ -20,6 +20,7 @@ import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.ObjectAccessControl;
 import com.google.api.services.storage.model.Objects;
 import com.google.api.services.storage.model.StorageObject;
+import ninhn.app.constant.PhotoConstant;
 import ninhn.app.model.Photo;
 import ninhn.app.model.PhotoReview;
 import ninhn.app.until.DefaultUntil;
@@ -192,32 +193,6 @@ public class StorageService {
         }
     }
 
-//    public boolean userDeletePhoto(String photoName, boolean isPublish) {
-//        try {
-//            deleteObject(photoName);
-//            if (isPublish) {
-//                Photo photo = this.photoService.findByName(photoName);
-//                if (photo != null) {
-//                    photo.setDeleted(true);
-//                    this.photoService.update(photo);
-//                    return true;
-//                }
-//            } else {
-//                PhotoReview photo = this.reviewService.findByName(photoName);
-//                if (photo != null) {
-//                    photo.setDeleted(true);
-//                    this.reviewService.update(photo);
-//                    return true;
-//                }
-//            }
-//            return false;
-//        } catch (IOException ioException) {
-//            return false;
-//        } catch (GeneralSecurityException gsException) {
-//            return false;
-//        }
-//    }
-
     public boolean adminApprovePhoto(String photoName) {
         try {
             PhotoReview photoReview = this.reviewService.findByName(photoName);
@@ -249,7 +224,18 @@ public class StorageService {
         }
     }
 
-    public boolean adminRejectPhoto(String photoName) {
+    public boolean adminRejectPhoto(String photoName, String message) {
+        PhotoReview photoReview = this.reviewService.findByName(photoName);
+        if (photoReview != null) {
+            photoReview.setDeleted(true);
+            if (message == null || PhotoConstant.MESSAGE_BLANK.equals(message)) {
+                photoReview.setMessage(PhotoConstant.UPLOAD_REJECT);
+            } else {
+                photoReview.setMessage(message);
+            }
+            this.reviewService.save(photoReview);
+            return true;
+        }
         return false;
     }
 

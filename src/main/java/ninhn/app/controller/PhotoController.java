@@ -58,15 +58,6 @@ public class PhotoController {
         return this.photoService.findByPhotoRandom();
     }
 
-//    @RequestMapping(path = "photo-insert", method = RequestMethod.POST)
-//    public List<Photo> insertPhotos(@RequestBody List<Photo> photos) {
-//        if (photos != null && photos.size() > 0) {
-//            photos.forEach(photo -> photo.setCreateTime(new Date()));
-//            return this.photoService.save(photos);
-//        }
-//        return null;
-//    }
-
     @RequestMapping(path = "photo-love-up", method = RequestMethod.GET)
     public Boolean photoLoveUp(@RequestParam String photoId, @RequestParam String userId) {
         if (this.photoService.updatePhotoLoveUp(photoId, userId) != null &&

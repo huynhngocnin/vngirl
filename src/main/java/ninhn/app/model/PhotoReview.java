@@ -1,5 +1,7 @@
 package ninhn.app.model;
 
+import ninhn.app.constant.PhotoConstant;
+
 import java.io.Serializable;
 
 /**
@@ -12,7 +14,7 @@ public class PhotoReview extends Model implements Serializable{
     private String uploadId;
     private String uploadName;
     private String uploadAvatar;
-    private String message;
+    private String message = PhotoConstant.UPLOAD_PENDING;
 
 
     public String getName() {
