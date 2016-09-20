@@ -17,12 +17,4 @@ public interface UserRepository extends MongoRepository<User,String>{
      */
     User findByFacebook(String facebook);
 
-    /**
-     * find user by id
-     *
-     * @param id
-     * @return
-     */
-    User findById(String id);
-
 }

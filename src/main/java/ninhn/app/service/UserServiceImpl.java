@@ -1,5 +1,6 @@
 package ninhn.app.service;
 
+import ninhn.app.constant.SystemConstant;
 import ninhn.app.model.User;
 import ninhn.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl extends ModelServiceImpl<User> implements UserService {
 
     private final UserRepository userRepository;
-//
-//    @Autowired
-//    private MongoTemplate mongoTemplate;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -34,6 +32,19 @@ public class UserServiceImpl extends ModelServiceImpl<User> implements UserServi
             return userdb;
         }
         return super.save(user);
+    }
+
+    @Override
+    public int checkRoles(String userId) {
+        User user = this.userRepository.findOne(userId);
+        if (user != null) {
+            if (SystemConstant.USER_ROLE_ADMIN == user.getRole()) {
+                return SystemConstant.USER_ROLE_ADMIN;
+            } else if (SystemConstant.USER_ROLE_USER == user.getRole()) {
+                return SystemConstant.USER_ROLE_USER;
+            }
+        }
+        return -1;
     }
 
     @Override

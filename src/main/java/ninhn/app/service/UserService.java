@@ -18,6 +18,8 @@ public interface UserService extends ModelService<User>{
      */
     User findAndRegisterUser(User user);
 
+    int checkRoles(String userId);
+
     /**
      * find User by facebook
      * @param facebook

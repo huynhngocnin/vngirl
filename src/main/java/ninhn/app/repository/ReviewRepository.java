@@ -16,6 +16,6 @@ public interface ReviewRepository extends MongoRepository<PhotoReview, String> {
 
     PhotoReview findByName(String name);
 
-    PhotoReview deletePhotoReviewByName(String name);
+    Long deletePhotoReviewByName(String name);
 
 }

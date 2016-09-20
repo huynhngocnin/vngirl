@@ -18,6 +18,7 @@ public class User extends Model implements Serializable {
     private List<String> love = new ArrayList<>();
     private String avatar;
     private String token;
+    private int role;
 
     public String getName() {
         return name;
@@ -89,5 +90,13 @@ public class User extends Model implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }

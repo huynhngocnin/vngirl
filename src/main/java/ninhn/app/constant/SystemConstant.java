@@ -24,4 +24,7 @@ public class SystemConstant {
     public static final String UPLOAD_NAME ="David L. Evans";
     public static final String UPLOAD_ID ="1178079645550097";
 
+    public static final int USER_ROLE_ADMIN = 1;
+    public static final int USER_ROLE_USER = 0;
+
 }

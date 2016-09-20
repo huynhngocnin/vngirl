@@ -49,7 +49,7 @@ public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements 
     }
 
     @Override
-    public PhotoReview deletePhotoReviewByName(String name){
+    public Long deletePhotoReviewByName(String name){
         return this.reviewRepository.deletePhotoReviewByName(name);
     }
 }

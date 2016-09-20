@@ -203,12 +203,11 @@ public class StorageService {
                 Storage client = StorageFactory.getService();
                 StorageObject object = client.objects().get(BUCKET_NAME, photoName).execute();
                 Storage.Objects.Copy copyRequest = client.objects().copy(BUCKET_NAME, photoName, BUCKET_NAME, photoPublishName, object);
-                copyRequest.setDestinationPredefinedAcl("full");
+                copyRequest.setDestinationPredefinedAcl("publicread");
                 StorageObject objectCopy = copyRequest.execute();
                 //Get url of object
                 String urlMedia = objectCopy.getMediaLink();
                 deleteObject(photoName);
-                //this.reviewService.delete(photo.getId());
                 this.reviewService.deletePhotoReviewByName(photoName);
                 photo.setName(photoPublishName);
                 photo.setUrl(urlMedia);

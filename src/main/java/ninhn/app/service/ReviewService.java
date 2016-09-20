@@ -15,5 +15,5 @@ public interface ReviewService extends ModelService<PhotoReview> {
 
     PhotoReview findByName(String name);
 
-    PhotoReview deletePhotoReviewByName(String name);
+    Long deletePhotoReviewByName(String name);
 }
