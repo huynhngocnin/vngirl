@@ -193,6 +193,48 @@ public class StorageService {
         }
     }
 
+    /**
+     * @param multipartFile
+     * @param strPhoto
+     * @return
+     */
+    public StorageObject adminUploadPhoto(MultipartFile multipartFile, String strPhoto) {
+        try {
+            InputStreamContent contentStream = new InputStreamContent(
+                    CONTENT_TYPE, multipartFile.getInputStream());
+            // Setting the length improves upload performance
+            contentStream.setLength(multipartFile.getSize());
+            String fileName = UPLOAD_PUBLIC + System.currentTimeMillis() + UNDERLINED + multipartFile.getOriginalFilename();
+            StorageObject objectMetadata = new StorageObject()
+                    // Set the destination object name
+                    .setName(fileName)
+                    // Set the access control list to publicly read-only
+                    .setAcl(Arrays.asList(
+                            new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
+
+            Storage client = StorageFactory.getService();
+            Storage.Objects.Insert insertRequest = client.objects().insert(
+                    BUCKET_NAME, objectMetadata, contentStream);
+            //Upload to cloud storage
+            StorageObject object = insertRequest.execute();
+            //Get url of object
+            String urlMedia = object.getMediaLink();
+            //Convert json to object
+            ObjectMapper mapper = new ObjectMapper();
+            Photo photo = mapper.readValue(strPhoto, Photo.class);
+            photo.setName(fileName);
+            photo.setUrl(urlMedia);
+            photo.setCreateTime(new Date());
+            //Save DB
+            this.photoService.save(photo);
+            return object;
+        } catch (IOException ioException) {
+            return null;
+        } catch (GeneralSecurityException gsException) {
+            return null;
+        }
+    }
+
     public boolean adminApprovePhoto(String photoName) {
         try {
             PhotoReview photoReview = this.reviewService.findByName(photoName);

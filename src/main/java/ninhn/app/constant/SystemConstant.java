@@ -27,4 +27,7 @@ public class SystemConstant {
     public static final int USER_ROLE_ADMIN = 1;
     public static final int USER_ROLE_USER = 0;
 
+    public static final String APP_UPDATE_MESSAGE ="Talo have new update version, please update form Play Store. Thank you!";
+
+    public static final String APP_UPDATE_IMAGE ="https://storage.googleapis.com/vn_girl/photo/update_app.png";
 }

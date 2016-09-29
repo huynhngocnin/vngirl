@@ -18,4 +18,6 @@ public interface ReviewRepository extends MongoRepository<PhotoReview, String> {
 
     Long deletePhotoReviewByName(String name);
 
+    Page<PhotoReview> findByDeleted (Boolean deleted, Pageable pageable);
+
 }

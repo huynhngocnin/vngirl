@@ -1,5 +1,6 @@
 package ninhn.app.controller;
 
+import ninhn.app.constant.ControllerConstant;
 import ninhn.app.model.Photo;
 import ninhn.app.model.User;
 import ninhn.app.service.PhotoService;
@@ -25,7 +26,7 @@ public class UserController {
     private PhotoService photoService;
 
 
-    @RequestMapping(path = "user-get", method = RequestMethod.GET)
+    @RequestMapping(path = ControllerConstant.REQUEST_MAPPING_USER_GET, method = RequestMethod.GET)
     public User getUser(@RequestParam String id) {
         if (!StringUtils.isEmpty(id)) {
             return this.userService.findById(id);
@@ -33,7 +34,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-get-facebook", method = RequestMethod.GET)
+    @RequestMapping(path = ControllerConstant.REQUEST_MAPPING_USER_GET_FACEBOOK, method = RequestMethod.GET)
     public User getUserFacebook(@RequestParam String facebook) {
         if (!StringUtils.isEmpty(facebook)) {
             return this.userService.findByFacebook(facebook);
@@ -41,7 +42,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-register", method = RequestMethod.POST)
+    @RequestMapping(path = ControllerConstant.REQUEST_MAPPING_USER_REGISTER, method = RequestMethod.POST)
     public User registerUser(@RequestBody User user) {
         if (user != null) {
             user.setCreateTime(new Date());
@@ -50,7 +51,7 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "user-photo-love", method = RequestMethod.GET)
+    @RequestMapping(path = ControllerConstant.REQUEST_MAPPING_USER_PHOTO_LOVE, method = RequestMethod.GET)
     public List<Photo> getPhotoLove(@RequestParam String userId) {
         if (!StringUtils.isEmpty(userId)) {
             User user = this.userService.findById(userId);
@@ -62,8 +63,8 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(path = "test")
+    @RequestMapping(path = "testOK")
     public String test() {
-        return "ok";
+        return "OK";
     }
 }

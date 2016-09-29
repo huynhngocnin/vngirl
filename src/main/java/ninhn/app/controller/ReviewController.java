@@ -31,20 +31,20 @@ public class ReviewController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/photo-review-user")
+    @RequestMapping(value = ControllerConstant.REQUEST_MAPPING_PHOTO_REVIEW_USER)
     public List<PhotoReview> userPhotoReview(@RequestParam("userId") String userId, @RequestParam(defaultValue = "0", required = false) int page) {
         return this.reviewService.findByUploadId(userId, page);
     }
 
-    @RequestMapping(value = "/photo-review-admin")
+    @RequestMapping(value = ControllerConstant.REQUEST_MAPPING_PHOTO_REVIEW_ADMIN)
     public List<PhotoReview> adminPhotoReview(@RequestParam("userId") String userId, @RequestParam(defaultValue = "0", required = false) int page) {
         if (SystemConstant.USER_ROLE_ADMIN == this.userService.checkRoles(userId)) {
-            return this.reviewService.findByPhotoPage(page);
+            return this.reviewService.findByPhotoReview(page);
         }
         return ControllerConstant.ARRAY_EMPTY;
     }
 
-    @RequestMapping(value = "/photo-review-approve")
+    @RequestMapping(value = ControllerConstant.REQUEST_MAPPING_PHOTO_REVIEW_APPROVE)
     public Boolean userUploadApprovePhoto(@RequestParam("userId") String userId, @RequestParam("photoName") String photoName, @RequestParam("approve") String approve, @RequestParam("message") String message) {
         if (SystemConstant.USER_ROLE_ADMIN == this.userService.checkRoles(userId)) {
             if (ControllerConstant.REVIEW_APPROVE.equals(approve)) {

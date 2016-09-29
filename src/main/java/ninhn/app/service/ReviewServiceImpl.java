@@ -26,8 +26,8 @@ public class ReviewServiceImpl extends ModelServiceImpl<PhotoReview> implements 
     }
 
     @Override
-    public List<PhotoReview> findByPhotoPage(int page) {
-        Page<PhotoReview> photoPage = this.reviewRepository.findAll(PageUntil.getPageReviewNumber(page));
+    public List<PhotoReview> findByPhotoReview(int page) {
+        Page<PhotoReview> photoPage = this.reviewRepository.findByDeleted(false, PageUntil.getPageReviewNumber(page));
         if (photoPage != null) {
             List<PhotoReview> photos = photoPage.getContent();
             return photos;

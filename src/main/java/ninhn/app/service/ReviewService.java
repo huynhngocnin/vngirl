@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ReviewService extends ModelService<PhotoReview> {
 
-    List<PhotoReview> findByPhotoPage(int page);
+    List<PhotoReview> findByPhotoReview(int page);
 
     List<PhotoReview> findByUploadId(String userId, int page);
 
